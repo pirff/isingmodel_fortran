@@ -1,15 +1,18 @@
 program mc1
-  implicit none
+  ! implicit none
 
   integer, parameter :: nmc = 100       ! number of trials
   integer, parameter :: n = 100000      ! sample size
   real, dimension(nmc) :: mu            ! result of each trial
   real :: mean, stdev                   ! mean and standard deviation
   integer :: j
+  real :: temperature
 
   !$OMP PARALLEL DO
   do j = 1, nmc
      print *, 'Experiment', j
+     temperature = 2.0 + J*0.01
+     print *, 'Temperature',temperature
      mu(j) = monte_carlo(n)
   end do
   !$OMP END PARALLEL DO

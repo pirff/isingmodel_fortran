@@ -39,8 +39,8 @@ program data
   real, parameter :: Kb = 1.0
   real, parameter :: J = 1.0
   integer, parameter :: L = 20 ! dimension
-  integer, parameter :: TimeEquil = 5000 ! time to equilibrium
-  integer, parameter :: TimeStat = 20000 ! statistics time
+  integer, parameter :: TimeEquil = 1000 ! time to equilibrium
+  integer, parameter :: TimeStat = 2000 ! statistics time
   integer, parameter :: WriteToCsv = 1 ! 0 - do not write to csv
   real  :: x,beta, temperature, r(L,L)
   double precision :: deltaE, prob, en, magn, en2, magn2, c1,c2, totalE, totalM
@@ -65,11 +65,14 @@ program data
   open(unit=1,file='data9.csv',status='unknown',ACCESS='APPEND')
   !open(unit=1,file='data.csv',status='replace')
 
+  !$OMP PARALLEL DO
   do z=0,2
     !call random_number(r)
     !lattice = nint(r)*2 - 1
+    print *, "Experiment ",z
     lattice = 1
     temperature = 2.0 + z*0.01
+
     ! print *, "**************"
     ! print *, temperature
     beta = 1 / temperature
@@ -102,7 +105,7 @@ program data
         end do
       end do
     end do
-    print *,"   reached equilibrium"
+    ! print *,"   reached equilibrium"
 
     !************** making sweep for statistics
     !*** defining some coefficients
@@ -164,13 +167,14 @@ program data
     en2 = en2 / TimeStat
     magn = magn / TimeStat
     magn2 = magn2 / TimeStat
-    print *, "  statistics computed"
-    if (WriteToCsv>0) THEN
-      write (1, "(5(f0.9,',',:))") temperature,en, en2, magn, magn2
-    END IF
-    print *, temperature,en, en2, magn, magn2
+    ! print *, "  statistics computed"
+    ! if (WriteToCsv>0) THEN
+      ! write (1, "(5(f0.9,',',:))") temperature,en, en2, magn, magn2
+    ! END IF
+    ! print *, temperature,en, en2, magn, magn2
+    write (*, "(5(f0.9,',',:))") temperature,en, en2, magn, magn2
   end do
-
+  !$OMP END PARALLEL DO
 
   close(1)
 

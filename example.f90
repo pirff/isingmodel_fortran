@@ -1,5 +1,8 @@
 program mc1
-  ! implicit none
+
+  use omp_lib
+  
+  implicit none
 
   integer, parameter :: nmc = 100       ! number of trials
   integer, parameter :: n = 100000      ! sample size

@@ -100,7 +100,7 @@ program main
   integer ( kind = 4 ), parameter :: n = 500
 
   real ( kind = 8 ) diff
-  real ( kind = 8 ) :: eps = 0.001D+00
+  real ( kind = 8 ) :: eps = 0.01D+00
   integer ( kind = 4 ) i
   integer ( kind = 4 ) iterations
   integer ( kind = 4 ) iterations_print

@@ -1,4 +1,5 @@
 program mc1
+  use omp_lib
   implicit none
 
   integer, parameter :: nmc = 20       ! number of trials
@@ -10,7 +11,7 @@ program mc1
 
   !$OMP PARALLEL DO
   do j = 1, nmc
-     ! print *, 'Experiment', j
+     print *, 'Experiment', j
      temp = 2.0 + j*0.01
      print *, metropolis(temp)
   end do
